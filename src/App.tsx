@@ -13,7 +13,7 @@ function App() {
   const [selectedPlan, setSelectedPlan] = useState<'Básico' | 'Premium'>('Premium');
 
   return (
-    <>
+    <div className="max-w-1100 mx-auto px-4 sm:px-6 lg:px-8">
       <Header />
       <Ticker />
       <Hero />
@@ -23,7 +23,7 @@ function App() {
       <RegistrationForm selectedPlan={selectedPlan} />
       <ContactBar />
       <Footer />
-    </>
+    </div>
   );
 }
 

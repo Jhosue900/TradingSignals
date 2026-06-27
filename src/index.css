@@ -32,3 +32,25 @@
 
 .up { color: #4ADE80; }
 .down { color: #F87171; }
+
+
+
+/* Mejoras de responsive y UX */
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+  .text-clamp-sm {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  }
+}
+
+/* Mejorar tap targets en móviles */
+a, button {
+  touch-action: manipulation;
+}
+
+/* Ajuste de scroll suave */
+html {
+  scroll-behavior: smooth;
+}

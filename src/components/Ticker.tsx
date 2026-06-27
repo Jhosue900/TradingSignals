@@ -12,19 +12,19 @@ export default function Ticker() {
   const doubleItems = [...items, ...items];
 
   return (
-    <div style={{ background: '#1A1A1A', color: '#FDFAF5', padding: '0.5rem 0', overflow: 'hidden', whiteSpace: 'nowrap', fontFamily: "'Inter', sans-serif", fontSize: '0.78rem' }}>
-      <div className="animate-ticker" style={{ display: 'inline-flex', gap: '2.5rem' }}>
+    <div className="bg-ink text-[#FDFAF5] py-2 overflow-hidden whitespace-nowrap font-sans text-xs sm:text-sm">
+      <div className="animate-ticker inline-flex gap-6 sm:gap-10">
         {doubleItems.map((item, i) => {
           const cls = chgClass(item.change);
           return (
-            <span key={`${item.name}-${i}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: '#AAA', letterSpacing: '0.05em' }}>{item.name}</span>
+            <span key={`${item.name}-${i}`} className="inline-flex items-center gap-2">
+              <span className="text-[#AAA] tracking-wide">{item.name}</span>
               {item.price !== null ? (
-                <span className={cls} style={{ fontWeight: 600 }}>
+                <span className={`${cls} font-semibold`}>
                   {item.prefix}{fmtNum(item.price, item.decimals)} {arrow(item.change)}{Math.abs(item.change).toFixed(2)}%
                 </span>
               ) : (
-                <span style={{ color: '#AAA', fontWeight: 600 }}>— — —</span>
+                <span className="text-[#AAA] font-semibold">— — —</span>
               )}
             </span>
           );

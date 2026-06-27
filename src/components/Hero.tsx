@@ -17,43 +17,52 @@ export default function Hero() {
   ];
 
   return (
-    <div id="hero" style={{ background: '#FDFAF5', borderBottom: '1px solid #C8C0B0', display: 'grid', gridTemplateColumns: '1fr 340px', gap: 0, maxWidth: '1100px', margin: '0 auto' }}>
-      <div style={{ padding: '3rem 2.5rem', borderRight: '1px solid #C8C0B0' }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#B5841A', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ display: 'inline-block', width: '20px', height: '1px', background: '#B5841A' }} />
+    <section id="hero" className="bg-[#FDFAF5] border-b border-[#C8C0B0] grid grid-cols-1 lg:grid-cols-[1fr_340px] max-w-1100 mx-auto">
+      {/* Columna principal */}
+      <div className="px-5 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 border-r-0 lg:border-r border-[#C8C0B0]">
+        <div className="flex items-center gap-2 text-accent text-[0.6rem] sm:text-[0.7rem] font-bold uppercase tracking-[0.18em] mb-4">
+          <span className="w-5 h-px bg-accent"></span>
           Análisis de Mercados
         </div>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.9rem, 3.5vw, 2.9rem)', fontWeight: 700, lineHeight: 1.18, letterSpacing: '-0.02em', color: '#1A1A1A', marginBottom: '1.25rem' }}>
+        <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-[-0.02em] text-ink mb-5">
           La información correcta,<br />en el momento que importa.
         </h1>
-        <p style={{ fontSize: '1.05rem', color: '#3D3D3D', lineHeight: 1.7, marginBottom: '1.75rem', fontWeight: 300, maxWidth: '560px', borderLeft: '3px solid #B5841A', paddingLeft: '1rem', fontStyle: 'italic' }}>
+        <p className="text-base sm:text-lg text-ink-mid leading-relaxed mb-6 font-light max-w-[560px] border-l-3 border-accent pl-4 italic">
           Cada movimiento del mercado comienza con una noticia. Nuestro sistema monitorea, filtra y te alerta antes de que el mercado reaccione.
         </p>
-        <div style={{ fontSize: '0.95rem', color: '#3D3D3D', lineHeight: 1.8, marginBottom: '2rem', columns: '2', columnGap: '1.75rem' }}>
+        <div className="text-sm sm:text-base text-ink-mid leading-relaxed mb-6 columns-1 sm:columns-2 gap-6">
           <p>Los operadores profesionales no toman decisiones en el vacío. Cada posición que abren está respaldada por información macroeconómica, noticias corporativas y eventos geopolíticos que mueven los precios.</p>
           <p>TradingSignals entrega esa inteligencia directamente a tu correo, acompañada de reportes analíticos redactados por especialistas, para que cada operación sea una decisión informada.</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
-          <a href="#planes" style={{ background: '#B5841A', color: '#FDFAF5', border: 'none', padding: '0.75rem 1.75rem', fontFamily: "'Inter', sans-serif", fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', display: 'inline-block', transition: 'background 0.2s' }} onMouseEnter={(e) => (e.currentTarget.style.background = '#8A6010')} onMouseLeave={(e) => (e.currentTarget.style.background = '#B5841A')}>Ver suscripciones</a>
-          <a href="#reportes" style={{ background: 'transparent', color: '#1A1A1A', border: '1.5px solid #1A1A1A', padding: '0.73rem 1.5rem', fontFamily: "'Inter', sans-serif", fontSize: '0.85rem', fontWeight: 500, letterSpacing: '0.04em', textTransform: 'uppercase', textDecoration: 'none', display: 'inline-block', transition: 'all 0.2s', cursor: 'pointer' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#1A1A1A'; e.currentTarget.style.color = '#FDFAF5'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1A1A1A'; }}>Conocer los reportes</a>
+        <div className="flex flex-wrap gap-3">
+          <a href="#planes" className="bg-accent text-white px-5 sm:px-7 py-3 font-sans text-sm font-semibold uppercase tracking-wide hover:bg-accent-dk transition-colors">
+            Ver suscripciones
+          </a>
+          <a href="#reportes" className="border-2 border-ink text-ink px-5 sm:px-7 py-3 font-sans text-sm font-medium uppercase tracking-wide hover:bg-ink hover:text-[#FDFAF5] transition-all">
+            Conocer los reportes
+          </a>
         </div>
       </div>
-      <div style={{ padding: '2.5rem 1.75rem', background: '#F5F1EA' }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.67rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6B6B6B', marginBottom: '1.25rem', paddingBottom: '0.5rem', borderBottom: '2px solid #1A1A1A' }}>Mercados al cierre</div>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.72rem', color: '#6B6B6B', marginBottom: '0.5rem' }}>{sidebarStatus}</div>
-        <ul style={{ listStyle: 'none' }}>
+
+      {/* Sidebar de mercados */}
+      <div className="bg-paper px-4 sm:px-6 py-6 sm:py-8 lg:py-10 order-first lg:order-last">
+        <div className="font-sans text-[0.6rem] sm:text-[0.67rem] font-bold uppercase tracking-[0.2em] text-[#6B6B6B] mb-4 pb-2 border-b-2 border-ink">
+          Mercados al cierre
+        </div>
+        <div className="font-sans text-[0.6rem] sm:text-[0.72rem] text-[#6B6B6B] mb-2">{sidebarStatus}</div>
+        <ul className="space-y-1">
           {marketItems.map((item) => {
             const m = data[item.key];
             const price = m?.price;
             const chg = m?.change;
             return (
-              <li key={item.key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0.7rem 0', borderBottom: '1px solid #E8E2D8', fontFamily: "'Inter', sans-serif", fontSize: '0.82rem' }}>
-                <span style={{ color: '#3D3D3D' }}>{item.label}</span>
-                <span>
-                  <span style={{ fontWeight: 600, color: '#1A1A1A' }}>
+              <li key={item.key} className="flex justify-between items-baseline py-2 border-b border-[#E8E2D8] font-sans text-sm">
+                <span className="text-ink-mid">{item.label}</span>
+                <span className="flex items-center gap-2">
+                  <span className="font-semibold text-ink">
                     {price !== null ? item.prefix + fmtNum(price, item.decimals) : '—'}
                   </span>
-                  <span className={chgClass(chg)} style={{ fontSize: '0.75rem', fontWeight: 500 }}>
+                  <span className={`${chgClass(chg)} text-xs font-medium`}>
                     {chg !== null ? `${arrow(chg)}${Math.abs(chg).toFixed(2)}%` : ' —'}
                   </span>
                 </span>
@@ -61,15 +70,15 @@ export default function Hero() {
             );
           })}
         </ul>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.68rem', color: '#6B6B6B', marginTop: '0.5rem' }}>{lastUpdate}</div>
-        <hr style={{ border: 'none', borderTop: '1px solid #C8C0B0', margin: '1.5rem 0' }} />
-        <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.05rem', fontStyle: 'italic', color: '#1A1A1A', lineHeight: 1.55, borderLeft: '3px solid #B5841A', paddingLeft: '0.9rem' }}>
+        <div className="font-sans text-[0.6rem] sm:text-[0.68rem] text-[#6B6B6B] mt-3">{lastUpdate}</div>
+        <hr className="border-t border-[#C8C0B0] my-6" />
+        <blockquote className="font-serif text-base sm:text-lg italic text-ink leading-relaxed border-l-3 border-accent pl-3">
           "En los mercados financieros, el que tiene la información primero, tiene la ventaja."
-        </p>
-        <p style={{ fontSize: '0.75rem', color: '#6B6B6B', fontStyle: 'italic', lineHeight: 1.5, marginTop: '1.25rem' }}>
+        </blockquote>
+        <p className="text-xs text-[#6B6B6B] italic mt-5">
           Precios en tiempo real vía APIs públicas. No constituyen asesoría de inversión.
         </p>
       </div>
-    </div>
+    </section>
   );
 }
