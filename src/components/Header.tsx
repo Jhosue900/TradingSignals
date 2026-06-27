@@ -7,70 +7,134 @@ export default function Header() {
     const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     const hoy = new Date();
-    return dias[hoy.getDay()] + ', ' + hoy.getDate() + ' de ' + meses[hoy.getMonth()] + ' de ' + hoy.getFullYear();
+    return `${dias[hoy.getDay()]}, ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}`;
   }, []);
 
+  const navItems = [
+    { href: '#hero', label: 'Inicio' },
+    { href: '#planes', label: 'Suscripciones' },
+    { href: '#reportes', label: 'Reportes' },
+    { href: '#como', label: 'Cómo funciona' },
+    { href: '#registro', label: 'Suscribirme ahora', accent: true },
+  ];
+
   return (
-    <header className="bg-[#FDFAF5] border-b-3 border-[#1A1A1A] border-double">
+    <header style={{ background: '#FDFAF5', borderBottom: '3px double #1A1A1A' }}>
+
       {/* Barra superior */}
-      <div className="flex flex-col sm:flex-row justify-between items-center px-4 sm:px-8 py-2 border-b border-[#C8C0B0] font-sans text-xs text-[#6B6B6B] gap-2">
-        <span className="text-center sm:text-left">Edición digital · México</span>
-        <div className="flex gap-4 sm:gap-6 flex-wrap justify-center">
-          <a href="tel:+5296199677288" className="hover:text-accent transition-colors hide-on-mobile sm:inline">
-            📞 +52 961 996 7728
-          </a>
-          <a href="tel:+525538944850" className="hover:text-accent transition-colors hide-on-mobile sm:inline">
-            📞 +52 553 894 4850
-          </a>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '6px 24px',
+        borderBottom: '1px solid #C8C0B0',
+        fontSize: '11px',
+        color: '#6B6B6B',
+        flexWrap: 'wrap',
+        gap: '4px',
+      }}>
+        <span>Edición digital · México</span>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+          {['+52 961 996 7728', '+52 553 894 4850'].map((phone) => (
+            <a
+              key={phone}
+              href={`tel:+${phone.replace(/\D/g, '')}`}
+              style={{ color: '#6B6B6B', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#B5841A')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#6B6B6B')}
+            >
+              📞 {phone}
+            </a>
+          ))}
         </div>
-        <span className="text-center text-[0.65rem] sm:text-xs whitespace-nowrap">{today}</span>
+        <span style={{ fontSize: '10px', whiteSpace: 'nowrap' }}>{today}</span>
       </div>
 
-      {/* Logo y título */}
-      <div className="text-center py-4 px-4 sm:py-6 sm:px-10">
-        <div className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-ink leading-none">
-          Trading<span className="text-accent">Signals</span>
+      {/* Logo */}
+      <div style={{ textAlign: 'center', padding: 'clamp(16px, 3vw, 28px) 16px' }}>
+        <div style={{
+          fontFamily: "'Playfair Display', Georgia, serif",
+          fontSize: 'clamp(28px, 6vw, 48px)',
+          fontWeight: 700,
+          letterSpacing: '-0.02em',
+          lineHeight: 1,
+          color: '#1A1A1A',
+        }}>
+          Trading<span style={{ color: '#B5841A' }}>Signals</span>
         </div>
-        <div className="font-sans text-[0.65rem] sm:text-xs uppercase tracking-[0.22em] text-[#6B6B6B] mt-1">
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '10px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.2em',
+          color: '#6B6B6B',
+          marginTop: '6px',
+        }}>
           Inteligencia de Mercados · Señales Profesionales en Tiempo Real
         </div>
       </div>
 
-      {/* Navegación */}
-      <nav className="border-t border-[#C8C0B0] relative">
-        {/* Botón hamburguesa (solo móvil) */}
+      {/* Nav */}
+      <nav style={{ borderTop: '1px solid #C8C0B0', position: 'relative' }}>
+
+        {/* Botón hamburguesa – solo visible en móvil con CSS */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="block sm:hidden w-full py-3 text-center font-sans text-sm font-medium uppercase tracking-wider text-ink-mid bg-[#FDFAF5] hover:bg-paper transition-colors"
           aria-expanded={menuOpen}
           aria-label="Menú de navegación"
+          style={{
+            display: 'none', // ocultado por defecto; el CSS de tu proyecto lo muestra en móvil
+            width: '100%',
+            padding: '10px',
+            background: '#FDFAF5',
+            border: 'none',
+            borderBottom: '1px solid #C8C0B0',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '12px',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: '#1A1A1A',
+            cursor: 'pointer',
+          }}
+          className="ts-hamburger"
         >
           {menuOpen ? '✕ Cerrar' : '☰ Menú'}
         </button>
 
-        {/* Enlaces */}
-        <div className={`${menuOpen ? 'block' : 'hidden'} sm:flex sm:flex-wrap justify-center gap-0`}>
-          {[
-            { href: '#hero', label: 'Inicio' },
-            { href: '#planes', label: 'Suscripciones' },
-            { href: '#reportes', label: 'Reportes' },
-            { href: '#como', label: 'Cómo funciona' },
-            { href: '#registro', label: 'Suscribirme ahora', accent: true },
-          ].map((item) => (
+        <div
+          className={menuOpen ? 'ts-nav-open' : 'ts-nav-closed'}
+          style={{ display: 'flex', flexWrap: 'wrap' }}
+        >
+          {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className={`
-                block sm:inline-block text-center px-4 py-2.5 sm:px-5 sm:py-3
-                font-sans text-[0.7rem] sm:text-xs font-medium uppercase tracking-wider
-                border-b sm:border-b-0 sm:border-r border-[#C8C0B0]
-                transition-all duration-200
-                ${item.accent
-                  ? 'bg-accent text-white hover:bg-accent-dk'
-                  : 'text-ink-mid hover:bg-ink hover:text-[#FDFAF5] bg-[#FDFAF5]'
-                }
-              `}
               onClick={() => setMenuOpen(false)}
+              style={{
+                flex: '1 1 auto',
+                textAlign: 'center',
+                padding: '10px 8px',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '10px',
+                fontWeight: item.accent ? 700 : 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.12em',
+                textDecoration: 'none',
+                borderRight: '1px solid #C8C0B0',
+                color: item.accent ? '#fff' : '#4A4A4A',
+                background: item.accent ? '#B5841A' : '#FDFAF5',
+                transition: 'background 0.15s, color 0.15s',
+                whiteSpace: 'nowrap',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = item.accent ? '#8A6010' : '#1A1A1A';
+                e.currentTarget.style.color = '#FDFAF5';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = item.accent ? '#B5841A' : '#FDFAF5';
+                e.currentTarget.style.color = item.accent ? '#fff' : '#4A4A4A';
+              }}
             >
               {item.label}
             </a>
