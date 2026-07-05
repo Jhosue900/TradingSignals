@@ -14,6 +14,10 @@ import RegistrationForm from './components/RegistrationForm';
 import ContactBar from './components/ContactBar';
 import Footer from './components/Footer';
 
+import Omega from './pages/Omega';
+import Portfolio from './pages/Portfolio';
+import Library from './pages/Library';
+
 function App() {
   const [selectedPlan, setSelectedPlan] = useState<'Básico' | 'Premium'>('Premium');
   const [session, setSession] = useState<Session | null>(null);
@@ -107,32 +111,10 @@ function App() {
         } />
 
         {/* RUTAS PRIVADAS: Dashboard Protegido por Sesión y Estado Activo */}
-        <Route path="/omega" element={
-          isAuthorized ? (
-            <div className="p-8 text-white">
-              <h1 className="text-2xl font-bold mb-4">Zona Omega</h1>
-              <p>Créditos disponibles este mes: <span className="text-amber-400 font-bold">{userProfile?.creditos_disponibles ?? 0}</span></p>
-            </div>
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        } />
-
-        <Route path="/portfolio" element={
-          isAuthorized ? (
-            <div className="p-8 text-white"><h1>Sección Portafolio (Modelados Financieros)</h1></div>
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        } />
-
-        <Route path="/library" element={
-          isAuthorized ? (
-            <div className="p-8 text-white"><h1>Biblioteca de Reportes Guardados</h1></div>
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        } />
+        {/* RUTAS PRIVADAS */}
+        <Route path="/omega" element={isAuthorized ? <Omega /> : <Navigate to="/login" replace />} />
+        <Route path="/portfolio" element={isAuthorized ? <Portfolio /> : <Navigate to="/login" replace />} />
+        <Route path="/library" element={isAuthorized ? <Library /> : <Navigate to="/login" replace />} />
 
         {/* Fallback de seguridad */}
         <Route path="*" element={<Navigate to="/" replace />} />
