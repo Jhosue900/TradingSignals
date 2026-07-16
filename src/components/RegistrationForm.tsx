@@ -281,7 +281,7 @@ export default function RegistrationForm({ selectedPlan, isOnlyAuthView = false 
                             color: isChecked ? '#8A6010' : '#3D3D3D',
                           }}
                         >
-                          <span>{inst.icon}</span>{inst.label}
+                          {inst.label}
                         </div>
                       );
                     })}

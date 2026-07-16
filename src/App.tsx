@@ -82,7 +82,7 @@ function App() {
   const isAuthorized = session && userProfile?.estado === 'activo';
 
   return (
-    <div className="bg-slate-950 w-full min-h-screen text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950">
+    <div className="bg-rule-950 w-full min-h-screen text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950">
       <Routes>
         {/* RUTA PÚBLICA: Landing Page */}
         <Route path="/" element={
