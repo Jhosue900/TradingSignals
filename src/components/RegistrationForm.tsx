@@ -58,6 +58,7 @@ export default function RegistrationForm({
 
   const navigate = useNavigate();
 
+  const server = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
   useEffect(() => {
     setPlan(selectedPlan);
@@ -80,17 +81,43 @@ export default function RegistrationForm({
 
     try {
       if (isLoginMode) {
-        const { error: loginError } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password: password,
-        });
+        console.log("👉 1. Iniciando Login...");
+        const { data: loginData, error: loginError } =
+          await supabase.auth.signInWithPassword({
+            email: email.trim(),
+            password: password,
+          });
 
         if (loginError) throw loginError;
 
-        navigate('/omega');
+        // Verificar estado del suscriptor
+        const { data: profile } = await supabase
+          .from("suscriptores")
+          .select("estado, plan")
+          .eq("id", loginData.user.id)
+          .single();
 
-
+        if (profile?.estado === "activo") {
+          navigate("/omega");
+        } else {
+          // Reintentar pago si no está activo
+          const response = await fetch(
+            `${server}/api/checkout/create-session`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${loginData.session?.access_token}`,
+              },
+              body: JSON.stringify({ plan: profile?.plan || "basico" }),
+            },
+          );
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error);
+          window.location.href = data.url;
+        }
       } else {
+        // --- REGISTRO ---
         if (!nombre.trim() || !fecha || !telefono.trim()) {
           setError(
             "Por favor completa todos los campos obligatorios del registro.",
@@ -103,14 +130,17 @@ export default function RegistrationForm({
           setLoading(false);
           return;
         }
-
-        if (selectedInstruments.length > 5 && plan == "Básico") {
+        if (selectedInstruments.length > 5 && plan === "Básico") {
           setError(
-            "Para elegir mas de 5 instrumentos debes seleccionar la suscripción premium.",
+            "Para elegir más de 5 instrumentos debes seleccionar la suscripción premium.",
           );
           setLoading(false);
           return;
         }
+
+        // console.log(" 1. Creando usuario en Supabase Auth...");
+
+
         const { data: authData, error: authError } = await supabase.auth.signUp(
           {
             email: email.trim(),
@@ -120,34 +150,87 @@ export default function RegistrationForm({
 
         if (authError) throw authError;
 
-        if (authData.user) {
-          // 2. Vincular los metadatos extendidos del formulario en tu tabla de uso público
-          const { error: dbError } = await supabase
-            .from("suscriptores")
-            .insert([
-              {
-                id: authData.user.id, // Sincroniza el ID único generado por Auth
-                nombre: nombre.trim(),
-                email: email.trim().toLowerCase(),
-                plan: plan === "Básico" ? "basico" : "premium", // Mapeo exacto a las restricciones CHECK de tu BD
-                estado: "activo", // Activo por defecto para pruebas iniciales
-                creditos_disponibles: plan === "Básico" ? 5 : 10,
-              },
-            ]);
+        if (!authData.user || !authData.session) {
+          throw new Error(
+            "No se obtuvo sesión activa de Supabase. Revisa si tienes 'Confirm Email' activado en Supabase Dashboard.",
+          );
+        }
 
-          if (dbError) throw dbError;
-          setSuccess(true);
+        // console.log(" 2. Usuario creado:", authData.user.id);
+
+        // console.log("3. Insertando en tabla suscriptores...");
+        const { error: dbError } = await supabase.from("suscriptores").insert([
+          {
+            id: authData.user.id,
+            nombre: nombre.trim(),
+            email: email.trim().toLowerCase(),
+            plan: plan === "Básico" ? "basico" : "premium",
+            estado: "inactivo", // O 'pendiente_pago' si ajustaste el CHECK constraint
+            creditos_disponibles: 0,
+          },
+        ]);
+
+        if (dbError) throw dbError;
+
+        /*console.log(
+          " 4. Enviando petición al Backend:",
+          `${server}/api/checkout/create-session`,
+        ); */
+
+        // Petición al backend enviando el JWT y el plan
+        /*console.log(
+          "4. Enviando petición al Backend:",
+          `${server}/api/checkout/create-session`,
+        ); */
+
+        try {
+          const token = authData.session?.access_token;
+          if (!token) {
+            throw new Error(
+              "No se obtuvo el access_token de la sesión de Supabase.",
+            );
+          }
+
+          const response = await fetch(
+            `${server}/api/checkout/create-session`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                plan: plan === "Básico" ? "basico" : "premium",
+              }),
+            },
+          );
+
+          //console.log("STATUS HTTP:", response.status);
+
+          const checkoutData = await response.json();
+
+          if (!response.ok) {
+            throw new Error(
+              checkoutData.error || "Error devuelto por el backend.",
+            );
+          }
+
+          //console.log("5. Redirigiendo a Stripe:", checkoutData.url);
+          window.location.href = checkoutData.url;
+        } catch (fetchErr: any) {
+          //console.error(" ERROR ESPECÍFICO DEL FETCH:", fetchErr);
+          throw fetchErr; // Lo atrapa el catch principal de submitForm
         }
       }
     } catch (err: any) {
+      console.error(" Error en submitForm:", err);
       setError(
         err.message || "Ocurrió un error inesperado durante el proceso.",
       );
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
-
   if (success) {
     return (
       <section
