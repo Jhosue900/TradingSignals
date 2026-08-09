@@ -12,5 +12,117 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+    <style>
+        /* ============================================
+           ESTILOS PERSONALIZADOS PARA TRADING SIGNALS
+           Ecosistema de Inversión Institucional
+           ============================================ */
+        
+        :root {
+            /* Mantiene la tipografía sofisticada de los reportes del SaaS */
+            --chat--font-family: 'Source Serif 4', Georgia, 'Playfair Display', serif;
+        }
+      
+        #n8n-chat {
+            /* Paleta de Colores Exclusiva */
+            --chat--color--primary: #b5841a;              /* Dorado de acento principal */
+            --chat--color--primary-shade-50: #936a13;      /* Dorado intermedio */
+            --chat--color--primary--shade-100: #72520e;    /* Dorado oscuro */
+        
+            --chat--color--secondary: #1a1a1a;            /* Negro tipográfico */
+            --chat--color-secondary-shade-50: #2d2d2d; 
+        
+            --chat--color-dark: #1a1a1a;                  /* Fondo del header institucional */
+            --chat--color-light: #f5f1ea;                 /* Fondo del cuerpo (Gris crema suave) */
+        
+            --chat--color-white: #fdfaf5;                 /* Blanco roto / Fondo secundario */
+            --chat--color-light-shade-50: #c8c0b0;        /* Gris Oxford/Bordes tradicionales */
+            --chat--color-medium: #8e8574;                /* Elementos secundarios */
+        
+            /* Estilo Estructural del Header */
+            --chat--header--background: #1a1a1a;           
+            --chat--header--color: #fdfaf5;               
+            --chat--heading--font-size: 1.15rem;           
+            --chat--subtitle--font-size: 0.8rem;          
+            --chat--subtitle--line-height: 1.4;
+        
+            /* Burbujas de Mensaje */
+            --chat--message--bot--background: #fdfaf5;     /* Fondo Bot (Blanco crema con borde) */
+            --chat--message--bot--color: #1a1a1a;          
+            --chat--message--user--background: #1a1a1a;    /* Fondo Usuario (Negro sólido corporativo) */
+            --chat--message--user--color: #fdfaf5;         
+        
+            /* Componente de Entrada (Input) */
+            --chat--input--background: #fdfaf5;           
+            --chat--input--border: 1px solid #c8c0b0;      
+            --chat--input--border-radius: 4px;            /* Bordes más rectos para estética clásica */
+            --chat--input--padding: 0.75rem 1rem;
+        
+            /* Botón de Envío */
+            --chat--input--send--button--background: #b5841a; 
+            --chat--input--send--button--color: #fdfaf5;       
+            --chat--input--send--button--background-hover: #936a13; 
+            --chat--input--send--button--color-hover: #fdfaf5;    
+        
+            /* Botón Flotante de Apertura (Toggle) */
+            --chat--toggle--background: #1a1a1a;          /* Botón negro elegante */
+            --chat--toggle--hover--background: #b5841a;   /* Cambio a dorado en hover */
+            --chat--toggle--color: #fdfaf5;               
+            --chat--toggle--size: 56px;                   
+        
+            /* Bordes y Sombras Premium */
+            --chat--border-radius: 6px;                   
+            --chat--window--border: 1px solid #c8c0b0;
+            --chat--window--border-radius: 8px;
+            --chat--window--box-shadow: 0 15px 45px -10px rgba(26, 26, 26, 0.15);
+        
+            /* Dimensiones */
+            --chat--window--width: 385px;
+            --chat--window--height: 580px;
+        }
+      
+        /* Estilización de la barra de desplazamiento (Scroll) */
+        #n8n-chat .chat--messages-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        #n8n-chat .chat--messages-list::-webkit-scrollbar-track {
+            background: #f5f1ea;
+        }
+        #n8n-chat .chat--messages-list::-webkit-scrollbar-thumb {
+            background: #c8c0b0;
+            border-radius: 2px;
+        }
+        #n8n-chat .chat--messages-list::-webkit-scrollbar-thumb:hover {
+            background: #b5841a;
+        }
+    </style>
+
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+        
+        createChat({
+            webhookUrl: 'https://n8n.advantechai.org/webhook/0c9b2058-abae-4e72-8ca2-ed5db05b6762/chat',
+            mode: 'window',
+            showWelcomeScreen: true,
+            initialMessages: [
+                '👋 Bienvenido a Trading Signals Inteligencia de Mercados.',
+                '¿En qué puedo ayudarte hoy respecto a la terminal, señales institucionales o gestión de tus créditos de análisis?'
+            ],
+            i18n: {
+                en: {
+                    title: '📈 Terminal Trading Signals',
+                    subtitle: 'Análisis cuantitativo e inteligencia de mercados en tiempo real.',
+                    getStarted: 'Iniciar Consulta',
+                    inputPlaceholder: 'Escribe tu consulta financiera...',
+                },
+            },
+        });
+    </script>
+
   </body>
 </html>
