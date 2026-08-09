@@ -587,7 +587,7 @@ export default function RegistrationForm({
               href="tel:+5296199677288"
               style={{ color: "#B5841A", textDecoration: "none" }}
             >
-              +52 961 996 7728
+              +52 553 103 9219
             </a>
           </p>
         </div>

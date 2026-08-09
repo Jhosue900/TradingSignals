@@ -15,8 +15,7 @@ export default function ContactBar() {
       </p>
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
         {[
-          { display: '+52 961 996 7728', tel: '+5296199677288' },
-          { display: '+52 553 894 4850', tel: '+525538944850' },
+          { display: '+52 553 103 9219', tel: '+525531039219' },
         ].map((phone) => (
           <a
             key={phone.tel}

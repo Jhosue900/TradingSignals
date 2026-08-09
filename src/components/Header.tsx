@@ -35,7 +35,19 @@ export default function Header() {
       }}>
         <span>Edición digital · México</span>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-          {['+52 961 996 7728', '+52 553 894 4850'].map((phone) => (
+          {/* {['+52 961 996 7728', '+52 553 894 4850'].map((phone) => (
+            <a
+              key={phone}
+              href={`tel:+${phone.replace(/\D/g, '')}`}
+              style={{ color: '#6B6B6B', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#B5841A')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#6B6B6B')}
+            >
+              📞 {phone}
+            </a>
+          ))} */}
+
+          {['+52 553 103 9219'].map((phone) => (
             <a
               key={phone}
               href={`tel:+${phone.replace(/\D/g, '')}`}
